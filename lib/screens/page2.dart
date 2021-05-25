@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'page3.dart';
 import 'page4.dart';
 import 'page5.dart';
 import 'page6.dart';
@@ -291,7 +292,7 @@ class _Page2State extends State<Page2> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Page4(),));
+                              builder: (context) => Page3(),));
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -312,6 +313,9 @@ class _Page2State extends State<Page2> {
             left: 3.0,
             right: 20.0,
             child: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white, //change your color here
+              ),
               backgroundColor: Colors.transparent,
               primary: false,
               title: Container(

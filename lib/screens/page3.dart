@@ -49,7 +49,7 @@ class _Page3State extends State<Page3> {
             height: screenHeight,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('images/page2_venice.jpg'),
+                  image: AssetImage('images/page3_city.jpg'),
                   fit: BoxFit.cover),
             ),
           ),
@@ -82,7 +82,7 @@ class _Page3State extends State<Page3> {
                     margin: EdgeInsets.only(top:15, left:15, right: 15,bottom: 15),
                     padding:EdgeInsets.only( left:10, right: 10,top:5, bottom: 10) ,
                     decoration: BoxDecoration(
-                        color: Colors.white60,
+                        color: Colors.white54,
                         border: Border.all(
                           color: Colors.grey,
                         ),
@@ -95,6 +95,8 @@ class _Page3State extends State<Page3> {
                         return CheckboxListTile(
                           title:  Text(entry.key, style: TextStyle(fontFamily: 'ChelaOne', fontSize: 24, fontWeight: FontWeight.w300,),),
                           value: entry.value,
+                          activeColor: Colors.black,
+                          checkColor: Colors.white,
                           onChanged: (bool value) {
                             setState(() {
                               places[entry.key] = value;
@@ -134,6 +136,9 @@ class _Page3State extends State<Page3> {
             left: 3.0,
             right: 20.0,
             child: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white, //change your color here
+              ),
               backgroundColor: Colors.transparent,
               primary: false,
               title: Container(
