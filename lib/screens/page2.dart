@@ -82,7 +82,7 @@ class _Page2State extends State<Page2> {
                   "Start State:",
                   style: TextStyle(
                     fontSize: 25,
-                      fontFamily: 'Raleway',
+                      fontFamily: 'SpecialElite',
                     color: Colors.white
                   ),
                 ),
@@ -147,8 +147,9 @@ class _Page2State extends State<Page2> {
                     child: Text(
                       "Start City:",
                       style: TextStyle(
-                        fontFamily: 'Raleway',
-                          fontSize: 23,
+                        fontFamily: 'SpecialElite',
+                          fontSize: 26,
+                          // fontWeight: FontWeight.w100,
                           color: Colors.white
                       ),
                     ),
