@@ -272,6 +272,8 @@ class _Page2State extends State<Page2> {
                   children: places.entries.map((entry)
                       {
                        return CheckboxListTile(
+                         activeColor: Colors.black,
+                         checkColor: Colors.white,
                           title:  Text(entry.key, style: TextStyle(fontFamily: 'SpecialElite', fontSize: 21, fontWeight: FontWeight.w500,),),
                           value: entry.value,
                           onChanged: (bool value) {
@@ -298,7 +300,7 @@ class _Page2State extends State<Page2> {
                           borderRadius: BorderRadius.circular(30.0),
                           side: BorderSide(color:Colors.white)),
                       child: Text(
-                        'See Places List',
+                        'Next',
                         style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: 'Raleway'),
                       ),
                     ),

@@ -93,7 +93,7 @@ class _Page3State extends State<Page3> {
                       children: places.entries.map((entry)
                       {
                         return CheckboxListTile(
-                          title:  Text(entry.key, style: TextStyle(fontFamily: 'ChelaOne', fontSize: 24, fontWeight: FontWeight.w300,),),
+                          title:  Text(entry.key, style: TextStyle(fontFamily: 'SpecialElite', fontSize: 21, fontWeight: FontWeight.w600,),),
                           value: entry.value,
                           activeColor: Colors.black,
                           checkColor: Colors.white,

@@ -52,7 +52,7 @@ class _Page5State extends State<Page5> {
           ),
 
           Container(
-            margin: EdgeInsets.only(top:screenHeight*.21,left:20,right:20),
+            margin: EdgeInsets.only(top:screenHeight*.2,left:20,right:20),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -111,9 +111,9 @@ class _Page5State extends State<Page5> {
                       }).toList(),
                       onChanged: (val) => setState(() => hoursPerDay = val),
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                           filled: true,
-                          fillColor: Colors.white70,
+                          fillColor: Colors.white54,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black, width: 0.5),
                             borderRadius: BorderRadius.circular(15.0),
@@ -144,7 +144,7 @@ class _Page5State extends State<Page5> {
                   ),
                   Container(
                     width: screenWidth*0.8,
-                    margin : EdgeInsets.only(top: 5,right: 30),
+                    margin : EdgeInsets.only(top: 5,right: 10),
                     child: DropdownButtonFormField(
                       isExpanded: true,
                       value: hoursPerPlace ,
@@ -161,7 +161,7 @@ class _Page5State extends State<Page5> {
                       decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                           filled: true,
-                          fillColor: Colors.white70,
+                          fillColor: Colors.white54,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black, width: 0.5),
                             borderRadius: BorderRadius.circular(15.0),
@@ -203,6 +203,9 @@ class _Page5State extends State<Page5> {
             left: 3.0,
             right: 20.0,
             child: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white, //change your color here
+              ),
               backgroundColor: Colors.transparent,
               primary: false,
               title: Container(
