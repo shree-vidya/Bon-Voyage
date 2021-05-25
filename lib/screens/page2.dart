@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -12,6 +13,16 @@ final List<String> districtList=[
   "Bengaluru",
   "Mysore"
 ];
+
+final Map<String,dynamic> places= {
+  "Temple": false,
+  "Amusement parks": false,
+  "Trekking places": false,
+  "Beaches": false,
+  "Historical sites": false,
+  "zoo": false,
+  "Resorts": false
+} ;
 
 String state;
 String district;
@@ -32,29 +43,7 @@ class _Page2State extends State<Page2> {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-    // appBar: PreferredSize(
-    //   preferredSize: Size.fromHeight(130.0), // here the desired height
-    //   child: AppBar(
-    //     backgroundColor: Colors.black45,
-    //     elevation: 5,
-    //     centerTitle: true,
-    //     title: Container(
-    //       height: screenHeight*.9,
-    //       color: Colors.blue,
-    //       child: Center(
-    //         child: Text(
-    //           'Bon Voyage',
-    //           textAlign: TextAlign.center,
-    //           style: TextStyle(
-    //               fontSize: 80.0,
-    //               fontFamily : 'Ariana-Violeta',
-    //               // fontWeight: FontWeight.bold,
-    //               color: Color.fromRGBO(255, 255, 255, 1)),
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // ),
+
     body:  Stack(
         children: <Widget>[
           Container(
@@ -128,7 +117,7 @@ class _Page2State extends State<Page2> {
                       decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                           filled: true,
-                          fillColor: Colors.white70,
+                          fillColor: Colors.white60,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black, width: 0.5),
                             borderRadius: BorderRadius.circular(15.0),
@@ -140,6 +129,9 @@ class _Page2State extends State<Page2> {
                             borderRadius: BorderRadius.circular(15.0),
                           )),
                     ),
+                  ),
+                  SizedBox(
+                    height: 10,
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -169,11 +161,13 @@ class _Page2State extends State<Page2> {
                           ),
                         );
                       }).toList(),
-                      onChanged: (val) => setState(() => district = val),
+                      onChanged: (val) {
+                        setState(() => district = val);
+                      },
                       decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
                           filled: true,
-                          fillColor: Colors.white70,
+                          fillColor: Colors.white60,
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black, width: 0.5),
                             borderRadius: BorderRadius.circular(15.0),
@@ -186,8 +180,97 @@ class _Page2State extends State<Page2> {
                           )),
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(left:10, right:10,top:20),
+                    child: Text(
+                      "Visiting State:",
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontFamily: 'SpecialElite',
+                          color: Colors.white
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: screenWidth*0.8,
+                    margin : EdgeInsets.only(top: 10,right: 30),
+                    child: DropdownButtonFormField(
+                      isExpanded: true,
+                      value: state ,
+                      hint: Text('Select State'),
+                      items: stateList.map((dura0) {
+                        return DropdownMenuItem(
+                          value: dura0,
+                          child: Text(
+                            '$dura0',
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (val) => setState(() => state = val),
+                      decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                          filled: true,
+                          fillColor: Colors.white60,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black, width: 0.5),
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(15.0),
+                          )),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(left:10, right:10,top:20),
+                    child: Text(
+                      "Preferred Places:",
+                      style: TextStyle(
+                          fontSize: 25,
+                          fontFamily: 'SpecialElite',
+                          color: Colors.white
+                      ),
+                    ),
+                  ),
+              Container(
+                margin: EdgeInsets.only(top:15, left:10, right: 10,bottom: 20),
+                padding:EdgeInsets.only( left:10, right: 10) ,
+                decoration: BoxDecoration(
+                    color: Colors.white60,
+                    border: Border.all(
+                      color: Colors.grey,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+
+                child: Column(
+                  children: places.entries.map((entry)
+                      {
+                       return CheckboxListTile(
+                          title:  Text(entry.key, style: TextStyle(fontFamily: 'SpecialElite', fontSize: 20, fontWeight: FontWeight.w600,),),
+                          value: entry.value,
+                          onChanged: (bool value) {
+                            setState(() {
+                             places[entry.key] = value;
+                            });
+                          },
+                        );
+                      }).toList(),
+                ),
+              )
                 ],
               ),
+
             ),
           ),
           Positioned(    // To take AppBar Size only
@@ -218,3 +301,6 @@ class _Page2State extends State<Page2> {
     );
   }
 }
+
+
+
