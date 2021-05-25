@@ -1,8 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'page4.dart';
+import 'page5.dart';
+import 'page6.dart';
+
 
 final List<String> stateList=[
+  "Karnataka",
+  "Delhi",
+  "Mumbai"
+];
+
+final List<String> visitingStateList=[
   "Karnataka",
   "Delhi",
   "Mumbai"
@@ -25,6 +35,7 @@ final Map<String,dynamic> places= {
 } ;
 
 String state;
+String visitingState;
 String district;
 
 class Page2 extends StatefulWidget {
@@ -59,7 +70,7 @@ class _Page2State extends State<Page2> {
           ),
 
           Container(
-          margin: EdgeInsets.only(top:screenHeight*.21,left:20,right:20),
+          margin: EdgeInsets.only(top:screenHeight*.20,left:20,right:20),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -100,7 +111,7 @@ class _Page2State extends State<Page2> {
                   // ),
                   Container(
                     width: screenWidth*0.8,
-                    margin : EdgeInsets.only(top: 10,right: 30),
+                    margin : EdgeInsets.only(top: 10,right: 10,left: 10),
                     child: DropdownButtonFormField(
                       isExpanded: true,
                       value: state ,
@@ -110,12 +121,13 @@ class _Page2State extends State<Page2> {
                           value: dura0,
                           child: Text(
                             '$dura0',
+                            style: TextStyle(fontSize: 17, fontFamily: 'Raleway', fontWeight: FontWeight.w600),
                           ),
                         );
                       }).toList(),
                       onChanged: (val) => setState(() => state = val),
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                           filled: true,
                           fillColor: Colors.white60,
                           enabledBorder: OutlineInputBorder(
@@ -148,7 +160,7 @@ class _Page2State extends State<Page2> {
                   ),
                   Container(
                     width: screenWidth*0.8,
-                    margin : EdgeInsets.only(top: 5,right: 30),
+                    margin : EdgeInsets.only(top: 5,left: 10,right: 10),
                     child: DropdownButtonFormField(
                       isExpanded: true,
                       value: district ,
@@ -158,6 +170,7 @@ class _Page2State extends State<Page2> {
                           value: dura0,
                           child: Text(
                             '$dura0',
+                            style: TextStyle(fontSize: 17, fontFamily: 'Raleway', fontWeight: FontWeight.w600),
                           ),
                         );
                       }).toList(),
@@ -165,7 +178,7 @@ class _Page2State extends State<Page2> {
                         setState(() => district = val);
                       },
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                           filled: true,
                           fillColor: Colors.white60,
                           enabledBorder: OutlineInputBorder(
@@ -197,22 +210,23 @@ class _Page2State extends State<Page2> {
                   ),
                   Container(
                     width: screenWidth*0.8,
-                    margin : EdgeInsets.only(top: 10,right: 30),
+                    margin : EdgeInsets.only(top: 10,right: 10,left: 10),
                     child: DropdownButtonFormField(
                       isExpanded: true,
                       value: state ,
                       hint: Text('Select State'),
-                      items: stateList.map((dura0) {
+                      items: visitingStateList.map((dura0) {
                         return DropdownMenuItem(
                           value: dura0,
                           child: Text(
                             '$dura0',
+                            style: TextStyle(fontSize: 17, fontFamily: 'Raleway', fontWeight: FontWeight.w600),
                           ),
                         );
                       }).toList(),
-                      onChanged: (val) => setState(() => state = val),
+                      onChanged: (val) => setState(() => visitingState = val),
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                           filled: true,
                           fillColor: Colors.white60,
                           enabledBorder: OutlineInputBorder(
@@ -243,8 +257,8 @@ class _Page2State extends State<Page2> {
                     ),
                   ),
               Container(
-                margin: EdgeInsets.only(top:15, left:10, right: 10,bottom: 20),
-                padding:EdgeInsets.only( left:10, right: 10) ,
+                margin: EdgeInsets.only(top:15, left:15, right: 15,bottom: 15),
+                padding:EdgeInsets.only( left:10, right: 10,top:5, bottom: 5) ,
                 decoration: BoxDecoration(
                     color: Colors.white60,
                     border: Border.all(
@@ -257,7 +271,7 @@ class _Page2State extends State<Page2> {
                   children: places.entries.map((entry)
                       {
                        return CheckboxListTile(
-                          title:  Text(entry.key, style: TextStyle(fontFamily: 'SpecialElite', fontSize: 20, fontWeight: FontWeight.w600,),),
+                          title:  Text(entry.key, style: TextStyle(fontFamily: 'SpecialElite', fontSize: 21, fontWeight: FontWeight.w500,),),
                           value: entry.value,
                           onChanged: (bool value) {
                             setState(() {
@@ -267,7 +281,27 @@ class _Page2State extends State<Page2> {
                         );
                       }).toList(),
                 ),
-              )
+              ),
+                  Container(
+                    margin: EdgeInsets.only(top:10,bottom: 20),
+                    height: screenHeight*.06,
+                    child: RaisedButton(
+                      color: Colors.transparent,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Page4(),));
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          side: BorderSide(color:Colors.white)),
+                      child: Text(
+                        'See Places List',
+                        style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: 'Raleway'),
+                      ),
+                    ),
+                  ),
                 ],
               ),
 
