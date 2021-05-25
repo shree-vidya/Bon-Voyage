@@ -61,7 +61,7 @@ class _Page2State extends State<Page2> {
             height: screenHeight,
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('images/venice.jpg'),
+                  image: AssetImage('images/page2_venice.jpg'),
                   fit: BoxFit.cover),
             ),
           ),

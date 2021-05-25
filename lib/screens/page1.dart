@@ -21,7 +21,7 @@ class _Page1State extends State<Page1> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('images/front_page.jpg'),
+                  image: AssetImage('images/page1_road.jpg'),
                   fit: BoxFit.fitHeight),
             ),
           ),
