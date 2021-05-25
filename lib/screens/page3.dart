@@ -63,9 +63,6 @@ class _Page3State extends State<Page3> {
               child: Column(
                 children: [
 
-
-
-
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(left:15, right:10),
@@ -79,7 +76,7 @@ class _Page3State extends State<Page3> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top:15, left:15, right: 15,bottom: 15),
+                    margin: EdgeInsets.only(top:20, left:15, right: 15,bottom: 15),
                     padding:EdgeInsets.only( left:10, right: 10,top:5, bottom: 10) ,
                     decoration: BoxDecoration(
                         color: Colors.white54,
@@ -107,7 +104,7 @@ class _Page3State extends State<Page3> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top:10,bottom: 20),
+                    margin: EdgeInsets.only(top:10,bottom: 25),
                     height: screenHeight*.06,
                     child: RaisedButton(
                       color: Colors.transparent,

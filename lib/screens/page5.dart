@@ -60,7 +60,7 @@ class _Page5State extends State<Page5> {
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(left:10, right:10),
                     child: Text(
-                      "Lets find out the duration your trip!",
+                      "Lets find out the duration of your trip!",
                       style: TextStyle(
                           fontSize: 28,
                           fontFamily: 'SpecialElite',
@@ -96,7 +96,7 @@ class _Page5State extends State<Page5> {
 
                   Container(
                     width: screenWidth*0.8,
-                    margin : EdgeInsets.only(top: 10,right: 30),
+                    margin : EdgeInsets.only(top: 15,right: 10),
                     child: DropdownButtonFormField(
                       isExpanded: true,
                       value: hoursPerDay ,
@@ -127,7 +127,7 @@ class _Page5State extends State<Page5> {
                     ),
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 30.0,
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
@@ -144,7 +144,7 @@ class _Page5State extends State<Page5> {
                   ),
                   Container(
                     width: screenWidth*0.8,
-                    margin : EdgeInsets.only(top: 5,right: 10),
+                    margin : EdgeInsets.only(top: 15,right: 10),
                     child: DropdownButtonFormField(
                       isExpanded: true,
                       value: hoursPerPlace ,
@@ -159,7 +159,7 @@ class _Page5State extends State<Page5> {
                       }).toList(),
                       onChanged: (val) => setState(() => hoursPerPlace = val),
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
                           filled: true,
                           fillColor: Colors.white54,
                           enabledBorder: OutlineInputBorder(
@@ -174,9 +174,12 @@ class _Page5State extends State<Page5> {
                           )),
                     ),
                   ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
                   Container(
-                    margin: EdgeInsets.only(top:screenHeight*.03),
-
+                    margin: EdgeInsets.only(top:10,bottom: 20),
+                    height: screenHeight*.06,
                     child: RaisedButton(
                       color: Colors.transparent,
                       onPressed: () {
@@ -194,6 +197,7 @@ class _Page5State extends State<Page5> {
                       ),
                     ),
                   ),
+
                 ],
               ),
             ),

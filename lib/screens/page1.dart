@@ -47,16 +47,16 @@ class _Page1State extends State<Page1> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top:screenHeight*.03),
-
+                  margin: EdgeInsets.only(top: 25,bottom: 20),
+                  height: screenHeight*.05,
                   child: RaisedButton(
                     color: Colors.transparent,
-                onPressed: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(
-                builder: (context) => Page2(),));
-                },
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Page2(),));
+                    },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0),
                         side: BorderSide(color:Colors.white)),
