@@ -22,7 +22,19 @@ app.get('/get-cities/:state', (req, res) => {
                 body
             });
         }
+    }) .catch(err => {
+        console.log(err)
+        res.status(500).json({
+            error: err
+        })
     })
-  })
+  });
+
+
+  app.get('/get-place-preference', (req, res) => {
+    var arr = JSON.parse(req.query.array);
+    console.log(arr);
+    res.send("success");
+  });
 
   module.exports = app;
