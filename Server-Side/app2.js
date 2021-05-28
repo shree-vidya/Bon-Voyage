@@ -49,6 +49,7 @@ function tsp(city,n,placeIds){
   var ncity;
   visited[city]=1;
   result.push(placeIds[city]);
+  // console.log("hello")
   ncity=least(city,n);
   if(ncity==999){
     ncity=0;
@@ -62,9 +63,10 @@ function tsp(city,n,placeIds){
 app.use(bodyParser.urlencoded({extended: "false"}));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-  });
+// app.get('/', (req, res) => {
+//   console.log(req.query)
+//     res.send('Hello World!')
+//   });
   app.get('/get-distance', (req, res) => {
     placeIds = JSON.parse(req.query.placeIds);
     var n=placeIds.length;
@@ -87,17 +89,19 @@ app.get('/', (req, res) => {
           myfunc(placeIds[i],placeIds[j],i,j);
           // arr[i][j]=arr[j][i]=ans;
           
-         }wait((10)*1000).then(() =>tsp(0,n,placeIds) ).then(() => res.status(200).json({
-          result
-      }));   
+         }   
           // arr[i][j]=arr[j][i]=0;
   //         }
       }
   }
-    
-
-        
-
+  wait((10)*1000).then(() =>{
+    tsp(0,n,placeIds);
+    wait((10)*1000).then(() =>{
+      console.log(result);
+    })  
+  }).then(() => res.status(200).json({
+    result
+}));
   })
 
   module.exports = app;
