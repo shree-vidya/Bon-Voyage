@@ -51,22 +51,24 @@ List stateList = [
 
 List cityList = List();
 List visitingCityList = List();
-
+List selectedPlacesPreference = ['tourist_attraction'];
+List selectedCities = List();
 Map<String, dynamic> visitingCityListCheckBox = new Map();
 
-final Map<String, dynamic> places = {
+final Map<String, dynamic> placesPreferenceCheckBox = {
+  "Amusement Parks": false,
   "Temple": false,
-  "Amusement parks": false,
-  "Trekking places": false,
-  "Beaches": false,
-  "Historical sites": false,
-  "zoo": false,
-  "Resorts": false
+  "Mosque" : false,
+  "Museum": false,
+  "Church": false,
+  "Tourist Attractions": false,
+  "Campground" : false,
+  "Zoo": false,
 };
 
 String state;
-String stateISO2;
-String visitingStateISO2;
+// String stateISO2;
+// String visitingStateISO2;
 String visitingState;
 String district;
 
@@ -76,59 +78,33 @@ class Page2 extends StatefulWidget {
 }
 
 class _Page2State extends State<Page2> {
-  // Future<void> fetchStates() async {
-  //   try{
-  //   final response = await http.get(
-  //     Uri.parse('https://www.universal-tutorial.com/api/states/India'),
-  //     // Send authorization headers to the backend.
-  //     headers: {
-  //       HttpHeaders.authorizationHeader: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfZW1haWwiOiJzaHJlZWV2aWR5YWp1bmtAZ21haWwuY29tIiwiYXBpX3Rva2VuIjoibmFubm4xQVVZd2h2SGJPOF80SndSU2Y0TzhOZnBqMlRDMEIzS1E1NFRFN3h5ZlBoOFB3aGJibFpwSkhvZ0hnYjlWSSJ9LCJleHAiOjE2MjIwOTQwNjh9.Fz_bKIoFohorkvyT5Z4hui4qtKY7-n9bGOBGY5f-V2I',
-  //     },
-  //   );
-  //   final responseJson = jsonDecode(response.body);
-  //   setState(() {
-  //     stateList = responseJson;
-  //     visitingStateList = responseJson;
-  //     stateList.forEach((element) {dummy.insert(0, element['state_name']);});
-  //     print(dummy);
-  //   });}
-  //   catch(error) {
-  //     print(error);
-  //   }
-  // }
 
   Future<void> fetchCity() async {
+    print(state);
     final response = await http.get(
       Uri.parse(
-          'https://api.countrystatecity.in/v1/countries/IN/states/$stateISO2/cities'),
+          'https://bon-voyage1.herokuapp.com/get-cities/$state'),
       // Send authorization headers to the backend.
-      headers: {
-        'X-CSCAPI-KEY':
-            'NElkaEFZNlQxY3NBZ0NGaVFsVzN6a3RlUDNyblA3R3d4bDBkaEwwTA==',
-      },
     );
     final responseJson = jsonDecode(response.body);
+    // print(responseJson['finalCities']);
     setState(() {
-      cityList = responseJson;
+      cityList = responseJson['finalCities'];
     });
   }
 
   Future<void> fetchVistingCity() async {
     final response = await http.get(
       Uri.parse(
-          'https://api.countrystatecity.in/v1/countries/IN/states/$visitingStateISO2/cities'),
+          'https://bon-voyage1.herokuapp.com/get-cities/$visitingState'),
       // Send authorization headers to the backend.
-      headers: {
-        'X-CSCAPI-KEY':
-        'NElkaEFZNlQxY3NBZ0NGaVFsVzN6a3RlUDNyblA3R3d4bDBkaEwwTA==',
-      },
     );
     final responseJson = jsonDecode(response.body);
-    // print(responseJson);
+
     setState(() {
-      responseJson.forEach((item)
+      responseJson['finalCities'].forEach((item)
       {
-        var city = item['name'];
+        var city = item;
         visitingCityListCheckBox[city] = false;
       });
       // print(visitingCityListCheckBox);
@@ -225,8 +201,6 @@ class _Page2State extends State<Page2> {
                           district = null;
                           var x = stateList.firstWhere(
                               (element) => element['name'] == state);
-                          stateISO2 = x['iso2'];
-                          print(stateISO2);
                         });
                         this.fetchCity();
                       },
@@ -272,9 +246,9 @@ class _Page2State extends State<Page2> {
                       hint: Text('Select City'),
                       items: cityList.map((item) {
                         return DropdownMenuItem(
-                          value: item['name'],
+                          value: item,
                           child: Text(
-                            item['name'],
+                            item,
                             style: TextStyle(
                                 fontSize: 17,
                                 fontFamily: 'Raleway',
@@ -337,12 +311,11 @@ class _Page2State extends State<Page2> {
                         );
                       }).toList(),
                       onChanged: (val) {
+                        selectedCities = [];
                         visitingCityListCheckBox.clear();
                         setState(() => visitingState = val);
                         var x = stateList.firstWhere(
                         (element) => element['name'] == visitingState);
-                        visitingStateISO2 = x['iso2'];
-                        print(visitingStateISO2 );
                         this.fetchVistingCity();
                         viewVisible = true;
                       },
@@ -408,6 +381,13 @@ class _Page2State extends State<Page2> {
                                 ),
                                 value: entry.value,
                                 onChanged: (bool value) {
+                                  if(value == true) {
+
+                                      selectedCities.add(entry.key);
+                                  }else
+                                    {
+                                      selectedCities.remove(entry.key);
+                                    }
                                   setState(() {
                                     visitingCityListCheckBox[entry.key] = value;
                                   });
@@ -446,7 +426,7 @@ class _Page2State extends State<Page2> {
                         ),
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: Column(
-                      children: places.entries.map((entry) {
+                      children: placesPreferenceCheckBox.entries.map((entry) {
                         return CheckboxListTile(
                           activeColor: Colors.black,
                           checkColor: Colors.white,
@@ -460,8 +440,14 @@ class _Page2State extends State<Page2> {
                           ),
                           value: entry.value,
                           onChanged: (bool value) {
+                            if(value == true) {
+                              selectedPlacesPreference.add(entry.key);
+                            }else
+                            {
+                              selectedPlacesPreference.remove(entry.key);
+                            }
                             setState(() {
-                              places[entry.key] = value;
+                              placesPreferenceCheckBox[entry.key] = value;
                             });
                           },
                         );
@@ -475,10 +461,13 @@ class _Page2State extends State<Page2> {
                     child: RaisedButton(
                       color: Colors.transparent,
                       onPressed: () {
+                        // print(visitingCityListCheckBox);
+                        print(selectedCities);
+                        print(selectedPlacesPreference);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Page3(),
+                              builder: (context) => Page3(selectedCities:selectedCities,selectedPlacesPreference:selectedPlacesPreference, state: state, district:district),
                             ));
                       },
                       shape: RoundedRectangleBorder(

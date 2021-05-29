@@ -48,8 +48,10 @@ int noOfPlaces=placeList.length;
 String state;
 String district;
 
+
 class Page4 extends StatefulWidget {
-  @override
+  Map<String,dynamic> finalTouristSitesNamesIds;
+  Page4({this.finalTouristSitesNamesIds});
   _Page4State createState() => _Page4State();
 }
 
