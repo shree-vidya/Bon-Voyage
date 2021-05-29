@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 var request = require('request');
 const wait=ms=>new Promise(resolve => setTimeout(resolve, ms));
 
-var ans;
-var placeIds=[];
+// var ans;
+
 var arr = [];
 var visited=[];
 var result=[];
@@ -29,8 +29,8 @@ function myfunc(placeid1,placeid2,i,j){
 }
 
 function least(c,n){
-  var i,nc=999;
-  var min=999,kmin;
+  var i,nc=Number.MAX_SAFE_INTEGER;
+  var min=Number.MAX_SAFE_INTEGER,kmin;
   for(i=0;i<n;i++){
     if((arr[c][i]!=0)&&(visited[i]==0)){
       if(arr[c][i]<min){
@@ -40,7 +40,7 @@ function least(c,n){
       }
     }
   }
-  if(min!=999){
+  if(min!=Number.MAX_SAFE_INTEGER){
     cost+=kmin;
   }
   return nc;
@@ -51,7 +51,8 @@ function tsp(city,n,placeIds){
   result.push(placeIds[city]);
   // console.log("hello")
   ncity=least(city,n);
-  if(ncity==999){
+  
+  if(ncity==Number.MAX_SAFE_INTEGER){
     ncity=0;
     cost+=arr[city][ncity];
     return;
@@ -70,6 +71,7 @@ app.use(bodyParser.json());
   app.get('/get-distance', (req, res) => {
     placeIds = JSON.parse(req.query.placeIds);
     var n=placeIds.length;
+    
     for(let i = 0; i < n; i++) {
       arr[i] = [];
       for(let j = 0; j < n; j++) {
