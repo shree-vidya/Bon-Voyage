@@ -27,12 +27,17 @@ app.get('/get-cities/:state', (req, res) => {
             if(!error && resp.statusCode == 200){
                  var body= JSON.parse(body);
             //  console.log(body[stateGiven])
-            // console.log(typeof(body[stateGiven]['districtData']));
+            console.log(typeof(body[stateGiven]['districtData']));
            finalCities = Object.keys(body[stateGiven]['districtData']);
                     console.log(finalCities);
                     wait((2)*1000).then(() => res.status(200).json({
                         finalCities
                     }));
+        }else
+        {
+          res.status(200).json({
+            "error" : error
+        })
         }
     });
   })
@@ -61,6 +66,13 @@ app.get('/get-cities/:state', (req, res) => {
                             console.log(ans);
                     })                   
             }
+          else
+          {
+            res.status(200).json({
+              "error" : error
+          })
+          }
+
         })
     });
     wait((5)*1000).then(() => res.status(200).json({
@@ -122,6 +134,12 @@ app.get('/get-cities/:state', (req, res) => {
               // console.log(arr[i][j]);
               
       }
+      else
+          {
+            res.status(200).json({
+              "error" : error
+          })
+          }
   })
   }
 
