@@ -15,6 +15,7 @@ var arr = [];
 var visited=[];
 var result=[];
 var finalCities = [];
+var cost=0;
 
 app.get('/get-cities/:state', (req, res) => {
     var stateGiven = req.params.state;
