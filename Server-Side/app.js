@@ -29,7 +29,7 @@ app.get('/get-cities/:state', (req, res) => {
             //  console.log(body[stateGiven])
             console.log(typeof(body[stateGiven]['districtData']));
            finalCities = Object.keys(body[stateGiven]['districtData']);
-                    console.log(finalCities);
+                    // console.log(finalCities);
                     wait((2)*1000).then(() => res.status(200).json({
                         finalCities
                     }));
@@ -46,7 +46,33 @@ app.get('/get-cities/:state', (req, res) => {
   app.get('/get-place-preference', (req, res) => {
     var cityList = JSON.parse(req.query.cityList);
     var placePreference = JSON.parse(req.query.placePreference);
+    var startCityState = JSON.parse(req.query.startCityState);
+    console.log(startCityState[0])
     var ans =[];
+    request({
+      url:'https://maps.googleapis.com/maps/api/place/textsearch/xml?query='+startCityState[0]+'+in+'+startCityState[1]+'&key=AIzaSyCS90XB-jQMIhQbA2C9vzfWKETNaxpjWJo',
+      method: 'GET',
+  } ,function(error,resp, body){
+          if(!error && resp.statusCode == 200){
+              parseString(body, function (err, result) {
+                  JSON.stringify(result);
+                  console.log(result);
+                  if(result['PlaceSearchResponse']['status'][0] != 'ZERO_RESULTS')
+                  {console.log(result['PlaceSearchResponse']['result']);
+                          ans.push({'name' : result['PlaceSearchResponse']['result'][0]['name'][0],
+                        'id' : result['PlaceSearchResponse']['result'][0]['place_id'][0]
+                      });     
+                      // console.log(ans);
+              }
+              })                   
+      }
+    else
+    {
+      res.status(200).json({
+        "error" : error
+    })
+    }
+  })
     cityList.forEach(city => {
         request({
             url:'https://maps.googleapis.com/maps/api/place/textsearch/xml?query=tourist_attraction+in+'+city+'&key=AIzaSyCS90XB-jQMIhQbA2C9vzfWKETNaxpjWJo',
@@ -63,7 +89,7 @@ app.get('/get-cities/:state', (req, res) => {
                               'id' : place['place_id'][0]
                             });
                             })
-                            console.log(ans);
+                            // console.log(ans);
                     })                   
             }
           else
