@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'page2.dart';
 import 'page5.dart';
+import 'page4.dart';
 
 final List<dynamic> placeList=[
   {
@@ -131,7 +132,7 @@ class _Page6State extends State<Page6> {
                     height: 30.0,
                   ),
                   Column(
-                    children: placeList.map((place){
+                    children: names.map((place){
                       return Column(
                         children: [
                           Row(
@@ -140,7 +141,7 @@ class _Page6State extends State<Page6> {
                                   alignment: Alignment.centerLeft,
                                   margin: EdgeInsets.only(left:10, right:20),
                                   child: Text(
-                                    place['rank'].toString(),
+                                    (names.indexOf(place)+1).toString(),
                                     style: TextStyle(
                                         fontSize: 23,
                                         fontFamily: 'SpecialElite',
@@ -154,7 +155,7 @@ class _Page6State extends State<Page6> {
                                     alignment: Alignment.centerLeft,
                                     margin: EdgeInsets.only(left:10, right:10),
                                     child: Text(
-                                      place['place'],
+                                      place,
                                       style: TextStyle(
                                           fontSize: 23,
                                           fontFamily: 'SpecialElite',

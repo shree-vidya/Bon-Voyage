@@ -13,7 +13,8 @@ double totalDays;
 
 class Page5 extends StatefulWidget {
   final int places;
-  Page5({this.places});
+  final int seconds;
+  Page5({this.places,this.seconds});
 
   @override
   _Page5State createState() => _Page5State();
@@ -22,7 +23,7 @@ class Page5 extends StatefulWidget {
 class _Page5State extends State<Page5> {
 
   int calculate(){
-    totalDays=(widget.places*hoursPerPlace)/hoursPerDay;
+    totalDays=((widget.places*hoursPerPlace)+(widget.seconds/3600))/hoursPerDay;
     print(totalDays);
     return totalDays.round();
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'page5.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 final List<dynamic> placeList=[
   {
@@ -47,7 +49,9 @@ final List<dynamic> placeList=[
 int noOfPlaces=placeList.length;
 String state;
 String district;
-
+List names = List();
+List ids = List();
+int time;
 
 class Page4 extends StatefulWidget {
   Map<String,dynamic> finalTouristSitesNamesIds;
@@ -58,6 +62,63 @@ class Page4 extends StatefulWidget {
 class _Page4State extends State<Page4> {
   @override
 
+  void initState(){
+    super.initState();
+    names=[];
+    ids=[];
+    // print(widget.finalTouristSitesNamesIds.keys);
+    // print(widget.finalTouristSitesNamesIds.values);
+    widget.finalTouristSitesNamesIds.forEach((key, value) {
+      // names.add(key);
+      ids.add(value);
+    });
+    ids.forEach((element) {
+      print(element);
+    });
+    fetchingDistance();
+  }
+
+  createUrlString()
+  {
+    String x="placeIds=[";
+    ids.forEach((element) {
+      if(ids.indexOf(element) != ids.length-1)
+        x += "\"" + element +"\",";
+      else
+        x += "\"" + element +"\"";
+    });
+    x += "]";
+    return x;
+  }
+
+  Future<void> fetchingDistance() async {
+    var uri = 'https://bon-voyage1.herokuapp.com/get-distance?' + createUrlString();
+    // print(uri);
+    final response = await http.get(
+        Uri.parse(uri));
+    final responseJson = jsonDecode(response.body);
+    setState(() {
+      print(responseJson);
+      // print("heyyyyyy");
+      // print(responseJson['time']);
+      responseJson['result'].forEach((item) {
+        var id = item;
+        widget.finalTouristSitesNamesIds.forEach((key, value) {
+          if(value==item){
+            names.add(key);
+          }
+        });
+      });
+      time=responseJson['time'];
+      // print(time);
+      print(names.length);
+      print(names[0]);
+      names.remove(names[0]);
+      for(int i=0;i<names.length;i++){
+        print(names[i]);
+      }
+    });
+  }
 
   Widget build(BuildContext context) {
 
@@ -112,7 +173,7 @@ class _Page4State extends State<Page4> {
                     height: 30.0,
                   ),
                   Column(
-                    children: placeList.map((place){
+                    children: names.map((place){
                       return Column(
                         children: [
                           Row(
@@ -121,7 +182,7 @@ class _Page4State extends State<Page4> {
                               alignment: Alignment.centerLeft,
                               margin: EdgeInsets.only(left:10, right:20),
                               child: Text(
-                                place['rank'].toString(),
+                                  (names.indexOf(place)+1).toString(),
                                 style: TextStyle(
                                     fontSize: 23,
                                     fontFamily: 'SpecialElite',
@@ -135,7 +196,7 @@ class _Page4State extends State<Page4> {
                                   alignment: Alignment.centerLeft,
                                   margin: EdgeInsets.only(left:10, right:10),
                                   child: Text(
-                                    place['place'],
+                                    place,
                                     style: TextStyle(
                                         fontSize: 23,
                                         fontFamily: 'SpecialElite',
@@ -163,7 +224,7 @@ class _Page4State extends State<Page4> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Page5(places: noOfPlaces),));
+                              builder: (context) => Page5(places: names.length,seconds: time),));
                       },
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),

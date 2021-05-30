@@ -11,12 +11,7 @@ app.use(bodyParser.urlencoded({extended: "false"}));
 app.use(bodyParser.json());
 app.use(bodyParser.xml());
 
-var arr = [];
-var visited=[];
-var result=[];
 var finalCities = [];
-var cost=0;
-
 app.get('/get-cities/:state', (req, res) => {
     var stateGiven = req.params.state;
     request({
@@ -111,11 +106,20 @@ app.get('/get-cities/:state', (req, res) => {
   app.get('/get-distance', (req, res) => {
     placeIds = JSON.parse(req.query.placeIds);
     var n=placeIds.length;
-    
+    var arr = [];
+    var timearr=[];
+    var visited=[];
+    var result=[];
+    let obj = {
+      cost: 0,
+  };
+
     for(let i = 0; i < n; i++) {
       arr[i] = [];
+      timearr[i]=[];
       for(let j = 0; j < n; j++) {
           arr[i][j] = -1;
+          timearr[i][j]=-1;
       }
   }
   for(i=0;i<n;i++){
@@ -126,20 +130,23 @@ app.get('/get-cities/:state', (req, res) => {
       for(let j = 0; j < n; j++) {
         if(i==j){
           arr[i][j]=0;
+          timearr[i][j]=0;
         }
          else if(arr[i][j] == -1){
-          myfunc(placeIds[i],placeIds[j],i,j);
+          myfunc(placeIds[i],placeIds[j],i,j,arr,timearr);
           
          }   
       }
   }
   wait((10)*1000).then(() =>{
-    tsp(0,n,placeIds);
+    tsp(0,n,placeIds,visited,result,obj,arr,timearr);
     wait((5)*1000).then(() =>{
-      console.log(result);
+      // console.log(result);
+      // console.log(cost);
     })  
   }).then(() => res.status(200).json({
-    result
+    result:result,
+    time:obj.cost
 }));
   })
 
@@ -147,7 +154,7 @@ app.get('/get-cities/:state', (req, res) => {
     return arr1.some(item => arr2.includes(item))
 }
 
-  function myfunc(placeid1,placeid2,i,j){
+  function myfunc(placeid1,placeid2,i,j,arr,timearr){
     request({
       // url: 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=place_id:ChIJ74XAbuL8DDkR-wJQ-vQyHkQ|place_id:ChIJDwI0rC13dDkRs9I9GN3k9Yc|place_id:ChIJbf8C1yFxdDkR3n12P4DkKt0&destinations=place_id:ChIJ74XAbuL8DDkR-wJQ-vQyHkQ|place_id:ChIJDwI0rC13dDkRs9I9GN3k9Yc|place_id:ChIJbf8C1yFxdDkR3n12P4DkKt0&mode=driving&language=fr-FR&key=AIzaSyCS90XB-jQMIhQbA2C9vzfWKETNaxpjWJo',
       url:'https://maps.googleapis.com/maps/api/distancematrix/json?origins=place_id:'+placeid1+'&destinations=place_id:'+placeid2+'&mode=driving&language=fr-FR&key=AIzaSyCS90XB-jQMIhQbA2C9vzfWKETNaxpjWJo',
@@ -158,6 +165,7 @@ app.get('/get-cities/:state', (req, res) => {
               // console.log(body['rows'][0]['elements'][0]);
               // ans=body['rows'][0]['elements'][0]['distance']['value'];
               arr[i][j]=arr[j][i]=body['rows'][0]['elements'][0]['distance']['value'];
+              timearr[i][j]=timearr[j][i]=body['rows'][0]['elements'][0]['duration']['value'];
               // console.log(arr[i][j]);
               
       }
@@ -170,37 +178,38 @@ app.get('/get-cities/:state', (req, res) => {
   })
   }
 
-  function least(c,n){
+  function least(c,n,obj,arr,timearr,visited){
     var i,nc=Number.MAX_SAFE_INTEGER;
     var min=Number.MAX_SAFE_INTEGER,kmin;
     for(i=0;i<n;i++){
       if((arr[c][i]!=0)&&(visited[i]==0)){
         if(arr[c][i]<min){
           min=arr[i][0]+arr[c][i];
-          kmin=arr[c][i];
+          kmin=timearr[c][i];
           nc=i;
         }
       }
     }
     if(min!=Number.MAX_SAFE_INTEGER){
-      cost+=kmin;
+      obj.cost+=kmin;
     }
     return nc;
   }
 
-  function tsp(city,n,placeIds){
+  function tsp(city,n,placeIds,visited,result,obj,arr,timearr){
     var ncity;
     visited[city]=1;
     result.push(placeIds[city]);
     // console.log("hello")
-    ncity=least(city,n);
-    
+    ncity=least(city,n,obj,arr,timearr,visited);
+  
     if(ncity==Number.MAX_SAFE_INTEGER){
       ncity=0;
-      cost+=arr[city][ncity];
+      obj.cost+=timearr[city][ncity];
+      // console.log(obj.cost);
       return;
     }
-    tsp(ncity,n,placeIds);
+    tsp(ncity,n,placeIds,visited,result,obj,arr,timearr);
   }
 
   module.exports = app;
