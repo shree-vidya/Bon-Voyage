@@ -51,6 +51,7 @@ class _Page3State extends State<Page3> {
 
   void initState() {
     super.initState();
+    finalTouristSitesNamesIds.clear();
     finalPlacesPreference = [];
     finalTouristSitesCheckBox = {};
     widget.initStateCity[0] = widget.district;
@@ -104,6 +105,7 @@ class _Page3State extends State<Page3> {
         Uri.parse(uri));
     final responseJson = jsonDecode(response.body);
     setState(() {
+      finalTouristSitesNamesIds.clear();
       firstPoint = responseJson['ans'][0];
       finalTouristSitesNamesIds[firstPoint['name']] = firstPoint['id'];
       responseJson['ans'].remove(responseJson['ans'][0]);

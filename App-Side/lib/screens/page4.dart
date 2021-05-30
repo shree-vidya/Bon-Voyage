@@ -64,8 +64,11 @@ class _Page4State extends State<Page4> {
 
   void initState(){
     super.initState();
-    names=[];
-    ids=[];
+    // names=[];
+    // ids=[];
+    names.clear();
+    ids.clear();
+
     // print(widget.finalTouristSitesNamesIds.keys);
     // print(widget.finalTouristSitesNamesIds.values);
     widget.finalTouristSitesNamesIds.forEach((key, value) {
@@ -98,6 +101,10 @@ class _Page4State extends State<Page4> {
         Uri.parse(uri));
     final responseJson = jsonDecode(response.body);
     setState(() {
+      // names=[];
+      // ids=[];
+      names.clear();
+      ids.clear();
       print(responseJson);
       // print("heyyyyyy");
       // print(responseJson['time']);
