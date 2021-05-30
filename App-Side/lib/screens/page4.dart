@@ -119,7 +119,7 @@ class _Page4State extends State<Page4> {
       }
     });
   }
-
+// CAPF Personnel
   Widget build(BuildContext context) {
 
     double screenHeight = MediaQuery.of(context).size.height;
@@ -128,7 +128,8 @@ class _Page4State extends State<Page4> {
     return Scaffold(
       backgroundColor: Colors.transparent,
 
-      body:  Stack(
+      body:
+      Stack(
         children: <Widget>[
           Container(
             height: screenHeight,
@@ -160,6 +161,13 @@ class _Page4State extends State<Page4> {
                       textAlign: TextAlign.center,
                     ),
                   ),
+                  names.length == 0?
+                  Column(children: [
+                    SizedBox(height: screenHeight*.15,),
+                    Container(child: CircularProgressIndicator(),
+                      alignment:Alignment.center,),
+                    SizedBox(height: screenHeight*.1,)],)
+                      :
                   Container(
                     margin: EdgeInsets.only(left:10, right:10,top:10),
                     decoration:BoxDecoration(
@@ -215,6 +223,10 @@ class _Page4State extends State<Page4> {
 
                   }).toList(),
                   ),
+                  names.length == 0?
+                  Column(children: [
+                    SizedBox(height: screenHeight*.001,),],)
+                      :
                   Container(
                     margin: EdgeInsets.only(top:10,bottom: 20),
                     height: screenHeight*.06,
