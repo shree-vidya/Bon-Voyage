@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'page4.dart';
-import 'page3.dart';
+import 'pop_up.dart';
 import 'page6.dart';
 
 
@@ -53,6 +53,7 @@ class _Page3State extends State<Page3> {
     super.initState();
     finalTouristSitesNamesIds.clear();
     finalPlacesPreference = [];
+    finalTouristSitesNamesIds = {};
     finalTouristSitesCheckBox = {};
     widget.initStateCity[0] = widget.district;
     widget.initStateCity[1] = widget.state;
@@ -152,9 +153,16 @@ class _Page3State extends State<Page3> {
           Container(
             margin: EdgeInsets.only(top:screenHeight*.20,left:20,right:20),
             child: SingleChildScrollView(
-              child: Column(
+              child:
+              finalTouristSitesCheckBox.length == 0?
+              Column(children: [
+                SizedBox(height: screenHeight*.3,),
+                Container(child: CircularProgressIndicator(),
+                alignment:Alignment.center,),
+                SizedBox(height: screenHeight*.1,)],)
+                  :
+              Column(
                 children: [
-
                   Container(
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(left:15, right:10),
@@ -167,6 +175,7 @@ class _Page3State extends State<Page3> {
                       ),
                     ),
                   ),
+
                   Container(
                     margin: EdgeInsets.only(top:20, left:15, right: 15,bottom: 15),
                     padding:EdgeInsets.only( left:10, right: 10,top:5, bottom: 10) ,
@@ -188,7 +197,6 @@ class _Page3State extends State<Page3> {
                           checkColor: Colors.white,
                           onChanged: (bool value) {
                             if(value == true) {
-
                             finalTouristSitesNamesIds[entry.key] = touristSitesNamesIds[entry.key];
                             }else
                             {
@@ -197,6 +205,7 @@ class _Page3State extends State<Page3> {
                             setState(() {
                               finalTouristSitesCheckBox[entry.key] = value;
                             });
+                            print(finalTouristSitesNamesIds);
                           },
                         );
                       }).toList(),
@@ -208,7 +217,11 @@ class _Page3State extends State<Page3> {
                     child: RaisedButton(
                       color: Colors.transparent,
                       onPressed: () {
+                        print("hello");
                         print(finalTouristSitesNamesIds);
+                        if(finalTouristSitesNamesIds.length == 1)
+                          showMyDialogBox(context);
+                        else
                         Navigator.push(
                             context,
                             MaterialPageRoute(

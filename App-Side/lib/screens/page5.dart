@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'page6.dart';
+import 'pop_up.dart';
 
 final List<int> hourList=[
 1,2,3,4,5,6,7,8,9,10
@@ -184,6 +185,9 @@ class _Page5State extends State<Page5> {
                     child: RaisedButton(
                       color: Colors.transparent,
                       onPressed: () {
+                        if( hoursPerDay == null || hoursPerPlace == null)
+                          showMyDialogBox(context);
+                        else
                         Navigator.push(
                             context,
                             MaterialPageRoute(

@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'page3.dart';
+import 'pop_up.dart';
 
 bool viewVisible = false;
 
@@ -90,17 +91,25 @@ class _Page2State extends State<Page2> {
     // print(responseJson['finalCities']);
     setState(() {
       cityList = responseJson['finalCities'];
+     cityList.removeWhere((e) {
+       return e == 'Unknown' || e == 'Other State'|| e == 'Foreign Evacuees'|| e == 'Railway Quarantine'||
+           e == 'Airport Quarantine'|| e == 'Others'|| e == 'State Pool';
+     });
+      // print(cityList);
     });
   }
 
-  Future<void> fetchVistingCity() async {
+  Future<void> fetchVisitingCity() async {
     final response = await http.get(
       Uri.parse(
           'https://bon-voyage1.herokuapp.com/get-cities/$visitingState'),
       // Send authorization headers to the backend.
     );
     final responseJson = jsonDecode(response.body);
-
+    responseJson['finalCities'].removeWhere((e) {
+      return e == 'Unknown' || e == 'Other State'|| e == 'Foreign Evacuees'|| e == 'Railway Quarantine'||
+          e == 'Airport Quarantine'|| e == 'Others'|| e == 'State Pool';
+    });
     setState(() {
       responseJson['finalCities'].forEach((item)
       {
@@ -183,6 +192,7 @@ class _Page2State extends State<Page2> {
                       value: state,
                       hint: Text('Select State'),
                       items: stateList.map((item) {
+
                         return DropdownMenuItem(
                           value: item['name'],
                           child: Text(
@@ -199,8 +209,8 @@ class _Page2State extends State<Page2> {
                           state = val;
                           cityList = [];
                           district = null;
-                          var x = stateList.firstWhere(
-                              (element) => element['name'] == state);
+                          // var x = stateList.firstWhere(
+                          //     (element) => element['name'] == state);
                         });
                         this.fetchCity();
                       },
@@ -314,9 +324,7 @@ class _Page2State extends State<Page2> {
                         selectedCities = [];
                         visitingCityListCheckBox.clear();
                         setState(() => visitingState = val);
-                        var x = stateList.firstWhere(
-                        (element) => element['name'] == visitingState);
-                        this.fetchVistingCity();
+                        this.fetchVisitingCity();
                         viewVisible = true;
                       },
                       decoration: InputDecoration(
@@ -355,6 +363,12 @@ class _Page2State extends State<Page2> {
                                 color: Colors.white),
                           ),
                         ),
+                        visitingCityListCheckBox.length == 0?
+                            Column(children: [
+                              SizedBox(height: screenHeight*.05,),
+                              CircularProgressIndicator(),
+                            SizedBox(height: screenHeight*.05,)],)
+                    :
                         Container(
                           margin: EdgeInsets.only(
                               top: 15, left: 15, right: 15, bottom: 15),
@@ -382,7 +396,6 @@ class _Page2State extends State<Page2> {
                                 value: entry.value,
                                 onChanged: (bool value) {
                                   if(value == true) {
-
                                       selectedCities.add(entry.key);
                                   }else
                                     {
@@ -461,9 +474,12 @@ class _Page2State extends State<Page2> {
                     child: RaisedButton(
                       color: Colors.transparent,
                       onPressed: () {
-                        // print(visitingCityListCheckBox);
+
                         print(selectedCities);
                         print(selectedPlacesPreference);
+                        if(selectedCities.length == 0 || selectedPlacesPreference.length == 1 || state == null || district == null)
+                          showMyDialogBox(context);
+                          else
                         Navigator.push(
                             context,
                             MaterialPageRoute(
