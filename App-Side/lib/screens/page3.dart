@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'page4.dart';
-import 'page3.dart';
+import 'pop_up.dart';
 import 'page6.dart';
 
 
@@ -217,6 +217,9 @@ class _Page3State extends State<Page3> {
                       onPressed: () {
                         print("hello");
                         print(finalTouristSitesNamesIds);
+                        if(finalTouristSitesNamesIds.length == 1)
+                          showMyDialogBox(context);
+                        else
                         Navigator.push(
                             context,
                             MaterialPageRoute(

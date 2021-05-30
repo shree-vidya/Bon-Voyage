@@ -6,6 +6,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'page3.dart';
+import 'pop_up.dart';
 
 bool viewVisible = false;
 
@@ -473,9 +474,12 @@ class _Page2State extends State<Page2> {
                     child: RaisedButton(
                       color: Colors.transparent,
                       onPressed: () {
-                        // print(visitingCityListCheckBox);
+
                         print(selectedCities);
                         print(selectedPlacesPreference);
+                        if(selectedCities.length == 0 || selectedPlacesPreference.length == 1 || state == null || district == null)
+                          showMyDialogBox(context);
+                          else
                         Navigator.push(
                             context,
                             MaterialPageRoute(
