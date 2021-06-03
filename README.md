@@ -28,7 +28,7 @@
 
 * Backend Framework – **Express**
 
-## Features to be added
+## Further additions to be made
 
 * Database for saving trips of particular user.
 
