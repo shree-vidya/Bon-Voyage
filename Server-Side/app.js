@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -46,7 +47,7 @@ app.get('/get-cities/:state', (req, res) => {
     console.log(startCityState[0])
     var ans =[];
     request({
-      url:'https://maps.googleapis.com/maps/api/place/textsearch/xml?query='+startCityState[0]+'+in+'+startCityState[1]+'&key=AIzaSyCS90XB-jQMIhQbA2C9vzfWKETNaxpjWJo',
+      url:'https://maps.googleapis.com/maps/api/place/textsearch/xml?query='+startCityState[0]+'+in+'+startCityState[1]+'&key='+process.env.API_KEY,
       method: 'GET',
   } ,function(error,resp, body){
           if(!error && resp.statusCode == 200){
@@ -71,7 +72,7 @@ app.get('/get-cities/:state', (req, res) => {
   })
     cityList.forEach(city => {
         request({
-            url:'https://maps.googleapis.com/maps/api/place/textsearch/xml?query=tourist_attraction+in+'+city+'&key=AIzaSyCS90XB-jQMIhQbA2C9vzfWKETNaxpjWJo',
+            url:'https://maps.googleapis.com/maps/api/place/textsearch/xml?query=tourist_attraction+in+'+city+'&key='+process.env.API_KEY,
             method: 'GET',
         } ,function(error,resp, body){
                 if(!error && resp.statusCode == 200){
@@ -156,8 +157,7 @@ app.get('/get-cities/:state', (req, res) => {
 
   function myfunc(placeid1,placeid2,i,j,arr,timearr){
     request({
-      // url: 'https://maps.googleapis.com/maps/api/distancematrix/json?origins=place_id:ChIJ74XAbuL8DDkR-wJQ-vQyHkQ|place_id:ChIJDwI0rC13dDkRs9I9GN3k9Yc|place_id:ChIJbf8C1yFxdDkR3n12P4DkKt0&destinations=place_id:ChIJ74XAbuL8DDkR-wJQ-vQyHkQ|place_id:ChIJDwI0rC13dDkRs9I9GN3k9Yc|place_id:ChIJbf8C1yFxdDkR3n12P4DkKt0&mode=driving&language=fr-FR&key=AIzaSyCS90XB-jQMIhQbA2C9vzfWKETNaxpjWJo',
-      url:'https://maps.googleapis.com/maps/api/distancematrix/json?origins=place_id:'+placeid1+'&destinations=place_id:'+placeid2+'&mode=driving&language=fr-FR&key=AIzaSyCS90XB-jQMIhQbA2C9vzfWKETNaxpjWJo',
+      url:'https://maps.googleapis.com/maps/api/distancematrix/json?origins=place_id:'+placeid1+'&destinations=place_id:'+placeid2+'&mode=driving&language=fr-FR&key='+process.env.API_KEY,
       method: 'GET',
   } ,function(error,resp, body){
           if(!error && resp.statusCode == 200){

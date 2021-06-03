@@ -1,4 +1,4 @@
-# Bon Voyage
+# Bon Voyage 
 
 >Bon Voyage is a trip planning application which gives the best route and the approximate duration of the trip. User can plan his complete trip and customize it according to his preferences.
 
@@ -27,4 +27,10 @@
 * Backend server environment – **Node.js**
 
 * Backend Framework – **Express**
+
+## Features to be added
+
+* Database for saving trips of particular user.
+
+* Authorization and authentication
 
